@@ -1,0 +1,9 @@
+[package]
+name = "advent2020"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+futures = { version = "0.3.*" }
+tokio = { version = "0.3.*", features = ["full"] }
+tokio-test = "0.3.0"

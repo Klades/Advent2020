@@ -1,0 +1,13 @@
+c:\Users\Alan\Documents\Advent2020\target\rls\debug\deps\quote-c4bb67fcc5dd37c2.rmeta: C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\lib.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\ext.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\format.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\ident_fragment.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\to_tokens.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\runtime.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\spanned.rs
+
+c:\Users\Alan\Documents\Advent2020\target\rls\debug\deps\libquote-c4bb67fcc5dd37c2.rlib: C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\lib.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\ext.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\format.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\ident_fragment.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\to_tokens.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\runtime.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\spanned.rs
+
+c:\Users\Alan\Documents\Advent2020\target\rls\debug\deps\quote-c4bb67fcc5dd37c2.d: C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\lib.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\ext.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\format.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\ident_fragment.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\to_tokens.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\runtime.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\spanned.rs
+
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\lib.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\ext.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\format.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\ident_fragment.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\to_tokens.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\runtime.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\quote-1.0.7\src\spanned.rs:

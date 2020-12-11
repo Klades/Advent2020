@@ -1,0 +1,13 @@
+C:\Users\Alan\Documents\Advent2020\target\debug\deps\memchr-7c96a928473f3d21.rmeta: C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\lib.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\fallback.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\iter.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\naive.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\mod.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\avx.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\sse2.rs
+
+C:\Users\Alan\Documents\Advent2020\target\debug\deps\libmemchr-7c96a928473f3d21.rlib: C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\lib.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\fallback.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\iter.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\naive.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\mod.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\avx.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\sse2.rs
+
+C:\Users\Alan\Documents\Advent2020\target\debug\deps\memchr-7c96a928473f3d21.d: C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\lib.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\fallback.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\iter.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\naive.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\mod.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\avx.rs C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\sse2.rs
+
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\lib.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\fallback.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\iter.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\naive.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\mod.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\avx.rs:
+C:\Users\Alan\.cargo\registry\src\github.com-1ecc6299db9ec823\memchr-2.3.4\src\x86\sse2.rs:
