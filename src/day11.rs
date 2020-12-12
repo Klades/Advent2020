@@ -1,163 +1,181 @@
-pub fn part1(data: &Vec<String>) -> i32 {
-	let mut floor = Seating::new(data);
+use std::fmt;
 
-	while floor.process_floor_normal() {};
-
-	return floor.count_seats();
+pub fn part1(data: &Vec<String>) -> usize {
+	let mut seats = Seating::new(data, enumerate_neighbors);
+	while seats.step(4) {}
+	return seats.count();
 }
 
-pub fn part2(data: &Vec<String>) -> i32 {
-	let mut floor = Seating::new(data);
-
-	while floor.process_floor_ray() {};
-
-	return floor.count_seats();
+pub fn part2(data: &Vec<String>) -> usize {
+	let mut seats = Seating::new(data, enumerate_sight_neighbors);
+	while seats.step(5) {}
+	return seats.count();
 }
 
 struct Seating {
-	floor: Vec<Vec<char>>
+	seats: Vec<Space>,
+}
+
+struct Space {
+	value: char,
+	neighbors: Vec<usize>
+}
+
+impl Space {
+	fn new(value: char, neighbors: Vec<usize>) -> Space {
+		match value {
+			'.' => Space { value: value, neighbors: vec![] },
+			x => Space { value: x, neighbors: neighbors }
+		}
+	}
+}
+
+impl PartialEq<Space> for Space {
+	fn eq(&self, other: &Space) -> bool {
+		return self.value == other.value;
+	}
+}
+
+impl PartialEq<char> for Space {
+	fn eq(&self, other: &char) -> bool {
+		return self.value == *other;
+	}
+}
+
+impl fmt::Debug for Space {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		f.debug_struct("Space").field("value", &self.value).finish()
+	}
 }
 
 impl Seating {
-	fn new(data: &Vec<String>) -> Seating {
-		let seats = data.iter().map(|line| line.chars().collect::<Vec<char>>()).collect();
-		return Seating { floor: seats }
-	}
+	fn new<F>(data: &Vec<String>, neighbor_finder: F) -> Seating where F: Fn(usize, usize, usize, usize, &Vec<char>) -> Vec<usize> {
+		let height = data.len();
+		let width = data[0].len();
+		let chars: Vec<char> = data.iter().map(|line| line.chars()).flatten().collect();
 
-	fn process_floor_normal(&mut self) -> bool {
-		return self.process_floor(Seating::process_seat_normal);
-	}
-
-	fn process_floor_ray(&mut self) -> bool {
-		return self.process_floor(Seating::process_seat_ray);
-	}
-
-	// Returns false if the floor didn't change
-	fn process_floor<F>(&mut self, processor: F) -> bool where F: Fn(&mut Seating, usize, usize) -> char {
-		let mut new_floor = self.floor.clone();
-
-		for y in 0..self.floor.len() {
-			for x in 0..self.floor[y].len() {
-				new_floor[y][x] = processor(self, x, y);
+		let mut neighbor_vec = vec![];
+		for y in 0..height {
+			for x in 0..width {
+				neighbor_vec.push(neighbor_finder(x, y, width, height, &chars));
 			}
 		}
 
-		if self.floor == new_floor { return false; }
+		let spaces: Vec<Space> = chars.iter().zip(neighbor_vec).map(|(c, n)| Space::new(*c, n)).collect();
+		return Seating { seats: spaces };
+	}
 
-		self.floor = new_floor;
+	fn step(&mut self, neighbor_limit: usize) -> bool {
+		let mut new_seats: Vec<char> = vec![];
+
+		for seat in &self.seats {
+			let new_value = self.process_seat(&seat, neighbor_limit);
+			new_seats.push(new_value);
+		}
+
+		if self.seats == new_seats { return false; }
+
+		// Well this sucks
+		for i in 0..new_seats.len() {
+			self.seats[i].value = new_seats[i];
+		}
+
 		return true;
 	}
 
-	fn count_seats(&self) -> i32 {
-		return self.floor.iter().flatten().filter(|c| **c == '#').count() as i32;
+	fn count(&self) -> usize {
+		return self.seats.iter().filter(|c| **c == '#').count();
 	}
 
-	fn process_seat_normal(&mut self, x: usize, y: usize) -> char {
-		let occupied_neighbors = self.enumerate_neighbors(x as i32, y as i32).iter().filter(|seat| **seat == '#').count();
-
-		return self.process_seat(x, y, occupied_neighbors);
-	}
-
-	fn process_seat_ray(&mut self, x: usize, y: usize) -> char {
-		let occupied_sights = enumerate_pairs().iter().filter(|direction| self.scan_direction(x as i32, y as i32, direction)).count();
-
-		return self.process_seat(x, y, occupied_sights);
-	}
-
-	// Returns true if scanning in a direction finds an occupied seat
-	fn scan_direction(&self, mut x: i32, mut y: i32, direction: &(i32, i32)) -> bool {
-		loop {
-			x = x + direction.0;
-			y = y + direction.1;
-
-			let pair = (x, y);
-			match self.pair_okay(&pair) {
-				true => if self.floor[y as usize][x as usize] == '#' { return true; },
-				false => return false
-			}
-		}
-	}
-
-	fn process_seat(&mut self, x: usize, y: usize, occupied_neighbors: usize) -> char {
-		match self.floor[y][x] {
-			'.' => '.',
-			'#' if occupied_neighbors >= 4 => 'L',
-			'L' if occupied_neighbors == 0 => '#',
-			x => x
-		}
-	}
-
-	fn enumerate_neighbors(&self, x: i32, y: i32) -> Vec<char> {
-		let positions = [
-			(x-1, y-1),
-			(x, y-1),
-			(x+1, y-1),
-			(x-1, y),
-			(x+1, y),
-			(x-1, y+1),
-			(x, y+1),
-			(x+1, y+1)
-		];
-
-		return positions.iter().filter(|pair| self.pair_okay(&pair)).map(|pair| self.floor[pair.1 as usize][pair.0 as usize]).collect();
-	}
-
-	fn pair_okay(&self, pair: &(i32, i32)) -> bool {
-		return pair.1 >= 0 && (pair.1 as usize) < self.floor.len() &&
-			pair.0 >= 0 && (pair.0 as usize) < self.floor[pair.1 as usize].len(); 
+	fn process_seat(&self, seat: &Space, limit: usize) -> char {
+		let neighbor_count = seat.neighbors.iter().map(|index| &self.seats[*index]).filter(|c| c.value == '#').count();
+		let new_value = match_seat(seat.value, neighbor_count, limit);
+		return new_value;
 	}
 }
 
-fn enumerate_pairs() -> Vec<(i32, i32)> {
-	return vec![
-		(-1, -1),
-		(0, -1),
-		(1, -1),
-		(-1, 0),
-		(1, 0),
-		(-1, 1),
-		(0, 1),
-		(1, 1)
-	];
+fn match_seat(seat: char, neighbors: usize, limit: usize) -> char {
+	let crowded = neighbors >= limit;
+	let empty = neighbors == 0;
+
+	match seat {
+		'#' if crowded => return 'L',
+		'L' if empty => return '#',
+		x => return x
+	}
+}
+
+fn coords(x: usize, y: usize, coord_factor: usize) -> usize {
+	return y * coord_factor + x;
+}
+
+fn enumerate_neighbors(x: usize, y: usize, maxwidth: usize, maxheight: usize, _: &Vec<char>) -> Vec<usize> {
+	let x_copy = x as i32;
+	let y_copy = y as i32;
+
+	let mut neighbor_coords = vec![];
+	for i in (x_copy - 1)..=(x_copy + 1) {
+		for j in (y_copy - 1)..=(y_copy + 1) {
+			if pair_okay(i, j, x, y, maxwidth, maxheight) {
+				neighbor_coords.push(coords(i as usize, j as usize, maxwidth));
+			}
+		}
+	}
+	return neighbor_coords;
+}
+
+fn enumerate_sight_neighbors(x: usize, y: usize, maxwidth: usize, maxheight: usize, floor: &Vec<char>) -> Vec<usize> {
+	let mut neighbors = vec![];
+
+	for x_move in &[0-1i32, 0, 1] {
+		for y_move in &[0-1, 0, 1] {
+			let mut x_here = x as i32;
+			let mut y_here = y as i32;
+
+			if *x_move == 0 && *y_move == 0 { continue; }
+
+			loop {
+				x_here += x_move;
+				y_here += y_move;
+
+				if !pair_okay(x_here, y_here, x, y, maxwidth, maxheight) { break; }
+				let here = coords(x_here as usize, y_here as usize, maxwidth);
+
+				if floor[here] != '.' { 
+					neighbors.push(here);
+					break;
+				}
+			}
+		}
+	}
+	return neighbors;
+}
+
+fn pair_okay(x: i32, y: i32, original_x: usize, original_y: usize, max_x: usize, max_y: usize) -> bool {
+	let x_okay = x >= 0 && (x as usize) < max_x;
+	let y_okay = y >= 0 && (y as usize) < max_y;
+
+	let not_origin = (x as usize) != original_x || (y as usize) != original_y;
+
+	return x_okay && y_okay && not_origin;
 }
 
 #[cfg(test)]
 mod tests {
 	use super::*;
+
 	#[test]
-	fn test_vec_vec_compare() {
-		let vector = vec![
-			vec![1, 2, 3, 4],
-			vec![3, 4, 3, 4]
-		];
-
-		let mut other_vec = vector.clone();
-
-		assert_eq!(vector, other_vec);
-		assert!(vector == other_vec);
-		other_vec[0][3] = 9;
-		assert_ne!(vector, other_vec);
-		assert!(vector != other_vec);
+	fn process_seat_works() {
+		assert_eq!(match_seat('#', 4, 4), 'L');
+		assert_eq!(match_seat('#', 0, 4), '#');
+		assert_eq!(match_seat('L', 0, 4), '#');
+		assert_eq!(match_seat('L', 4, 4), 'L');
+		assert_eq!(match_seat('.', 0, 1), '.');
 	}
 
 	#[test]
-	fn test_floor_update() {
-		let data: Vec<String> = "L.LL.LL.LL
-LLLLLLL.LL
-L.L.L..L..
-LLLL.LL.LL
-L.LL.LL.LL
-L.LLLLL.LL
-..L.L.....
-LLLLLLLLLL
-L.LLLLLL.L
-L.LLLLL.LL".lines().map(|line| String::from(line)).collect();
-
-		let mut floor = Seating::new(&data);
-		let result = floor.process_floor_normal();
-		assert!(result);
-
-		let second_data: Vec<String> = "#.##.##.##
+	fn step_works_without_sight() {
+		let data = "#.##.##.##
 #######.##
 #.#.#..#..
 ####.##.##
@@ -168,7 +186,57 @@ L.LLLLL.LL".lines().map(|line| String::from(line)).collect();
 #.######.#
 #.#####.##".lines().map(|line| String::from(line)).collect();
 
-		let second_floor = Seating::new(&second_data);
-		assert_eq!(floor.floor, second_floor.floor);
+		let mut seats = Seating::new(&data, enumerate_neighbors);
+		seats.step(4);
+
+		let stepped_data = "#.LL.L#.##
+#LLLLLL.L#
+L.L.L..L..
+#LLL.LL.L#
+#.LL.LL.LL
+#.LLLL#.##
+..L.L.....
+#LLLLLLLL#
+#.LLLLLL.L
+#.#LLLL.##".lines().map(|line| String::from(line)).collect();
+
+		let stepped_seats = Seating::new(&stepped_data, enumerate_neighbors);
+
+		assert_eq!(seats.count(), stepped_seats.count());
+		assert_eq!(seats.seats, stepped_seats.seats);
+	}
+
+	#[test]
+	fn step_works_with_sight() {
+		let data = "#.##.##.##
+#######.##
+#.#.#..#..
+####.##.##
+#.##.##.##
+#.#####.##
+..#.#.....
+##########
+#.######.#
+#.#####.##".lines().map(|line| String::from(line)).collect();
+
+		let mut seats = Seating::new(&data, enumerate_sight_neighbors);
+		seats.step(5);
+
+		let stepped_data = "#.LL.LL.L#
+#LLLLLL.LL
+L.L.L..L..
+LLLL.LL.LL
+L.LL.LL.LL
+L.LLLLL.LL
+..L.L.....
+LLLLLLLLL#
+#.LLLLLL.L
+#.LLLLL.L#".lines().map(|line| String::from(line)).collect();
+
+		let stepped_seats = Seating::new(&stepped_data, enumerate_sight_neighbors);
+
+		assert_eq!(seats.count(), stepped_seats.count());
+		assert_eq!(seats.seats, stepped_seats.seats);
+
 	}
 }
