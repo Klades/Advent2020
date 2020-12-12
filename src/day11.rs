@@ -127,8 +127,8 @@ fn enumerate_neighbors(x: usize, y: usize, maxwidth: usize, maxheight: usize, _:
 fn enumerate_sight_neighbors(x: usize, y: usize, maxwidth: usize, maxheight: usize, floor: &Vec<char>) -> Vec<usize> {
 	let mut neighbors = vec![];
 
-	for x_move in &[0-1i32, 0, 1] {
-		for y_move in &[0-1, 0, 1] {
+	for x_move in &[-1, 0, 1] {
+		for y_move in &[-1, 0, 1] {
 			let mut x_here = x as i32;
 			let mut y_here = y as i32;
 
