@@ -39,7 +39,6 @@ impl Ship {
 	}
 	
 	fn distance(&self) -> i32 {
-		println!("{} {} {}", self.position.0, self.position.1, self.position.0.abs() + self.position.1.abs());
 		return self.position.0.abs() + self.position.1.abs();
 	}
 
@@ -124,7 +123,6 @@ F11".lines().map(|line| String::from(line)).collect();
 		let mut ship = Ship::new();
 		for line in &data {
 			let (action, amount) = parse_instruction(line);
-			println!("{}, {}, {}", line, action, amount);
 			ship.move_ship(action, amount);
 		}
 
