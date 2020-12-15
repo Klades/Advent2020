@@ -19,6 +19,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 
 struct DayResults {
 	day:  i32,
@@ -87,6 +88,10 @@ async fn main() {
 		task::spawn(async {
 			let data = read_lines("data/day13.txt");
 			return day_results!(day13, 13, &data);
+		}),
+		task::spawn(async {
+			let data = read_lines("data/day14.txt");
+			return day_results!(day14, 14, &data);
 		})
 	];
 
