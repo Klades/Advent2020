@@ -14,6 +14,21 @@
 			"label": "Rust: cargo build - Advent2020"
 		},
 		{
+			"command": "cargo",
+			"args": [
+				"run",
+				"--release"
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"label": "Rust: cargo run --release",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
 			"type": "cargo",
 			"subcommand": "test",
 			"problemMatcher": [
